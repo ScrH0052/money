@@ -1,0 +1,18 @@
+server:
+  port: 8101
+management:
+  server:
+    port: 8101
+    
+dubbo:
+  registry:
+    address: zookeeper://192.168.146.130:2181
+  monitor:
+    protocol: registry
+  application:
+    name: web
+
+
+spring:
+  thymeleaf:
+    cache: false
