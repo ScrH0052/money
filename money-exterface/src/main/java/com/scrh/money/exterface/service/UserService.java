@@ -1,5 +1,7 @@
 package com.scrh.money.exterface.service;
 
+import com.scrh.money.exterface.domain.User;
+
 import java.util.Map;
 
 /**
@@ -40,4 +42,18 @@ public interface UserService {
      * @param someInfo 注册第一步提交信息
      */
     void cacheSomeInfo(Map<String, Object> someInfo);
+
+    /**
+     * 校验实名认证中输入的手机号码是否与注册的手机号码一致
+     * @param phone 手机号码
+     * @return 判断结果
+     */
+    boolean checkPhone(Long phone);
+
+    /**
+     * 完成注册，将用户信息插入到数据库中
+     * @param user 用户对象
+     * @return 插入结果
+     */
+    boolean registComplete(User user);
 }

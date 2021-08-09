@@ -34,6 +34,7 @@
         <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
         <jedis.version>3.6.2</jedis.version>
         <hutool.version>5.7.7</hutool.version>
+        <alipay-easysdk.version>2.2.0</alipay-easysdk.version>
     </properties>
     <!--子项目依赖管理-->
     <dependencyManagement>
@@ -160,6 +161,13 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
+            <!-- 支付宝SDK-->
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-easysdk</artifactId>
+                <version>${alipay-easysdk.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <dependencies>

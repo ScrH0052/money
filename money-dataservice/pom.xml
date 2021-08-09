@@ -84,6 +84,13 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!--AlipaySDK-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-easysdk</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

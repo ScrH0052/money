@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-1.7.2.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/leftTime.min.js}"></script>
+    <title>注册动力金融网-动力金融网,专业的互联网金融信息服务平台</title>
+	<style type="text/css">
+        .testBtn-a{display: inline-block;height:40px;line-height:30px;padding:0 8px; border:0; border-radius:0px;color:#fff;background:rgb(65,133,244);cursor: pointer;}
+        .testBtn-a.on{background:#c9c9c9;color:#666;cursor: default;}
+    </style>
+</head>
+
+<body>
+<div id="header">
+    <div th:include="commons/header :: html"></div>
+</div>
+
+<div class="login-body regBody">
+    <div class="mainBox">
+        <div class="homeWap">
+
+            <div class="reg-complete">
+                <ul class="clearfix">
+                    <li>注册</li>
+                    <li>实名认证</li>
+                    <li>完成</li>
+                </ul>
+            </div>
+
+            <div class="login-cnt reg-body clearfix">
+                <div class="fl">
+                    <div >
+                        <h3 id="complete-tip" ></h3>
+                    </div>
+                    <script>
+                        let e = $("#complete-tip")
+                        $.leftTime(5,function(d){
+                            if(d.status){
+                                e.html("注册成功！"+d.s+"秒后跳转至首页");
+                            }else{
+                                window.location.href="/index"
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--页脚start-->
+<div th:include="commons/footer :: html"></div>
+<!--页脚end-->
+
+<!--遮罩层start-->
+<div id="mask" class="dialog-overlay" style="display:none;"></div>
+<!--遮罩层end-->
+
+</body>
+</html>

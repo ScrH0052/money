@@ -1018,7 +1018,7 @@ body {background:#F8F8F8;}
 .login-cnt .input_text{ float:left; font-size:12px; color:#999; height:18px; line-height:18px; padding:9px 10px; width:258px; border-radius:0px;}
 .login-cnt .form-hint{  height:36px; line-height:36px; background:#FFF9F9; border:solid 1px #FA3D58; position:absolute; left:84px; top:37px; }
 .login-cnt .form-hint p{ padding:0px 10px; color:#fa3e58;}
-.login-cnt .form-hint i{ display:block; width:8px; height:6px; overflow:hidden; background:url(..../images/bg_bg.png) no-repeat; position:absolute; left:20px; top:-6px;}
+.login-cnt .form-hint i{ display:block; width:8px; height:6px; overflow:hidden; background:url(../images/bg_bg.png) no-repeat; position:absolute; left:20px; top:-6px;}
 .login-cnt .password-grade{ height:17px; margin-top:8px; padding-left:84px;overflow:hidden;}
 .login-cnt .password-grade span{ float:left; width:89px; height:17px; text-align:center; line-height:17px; background:#DBDBDB; color:#fff; margin-right:7px;}
 .login-cnt .password-grade span.on{ background:#17A2D5;}
@@ -1027,7 +1027,7 @@ body {background:#F8F8F8;}
 .login-cnt .forget-password a:hover{ color:#c7000a;}
 .login-cnt .remember { padding-left:84px; margin-top:45px;}
 .login-cnt .remember a{ display:block;}
-.login-cnt .remember i{ display:inline-block; vertical-align:top; width:15px; height:15px; overflow:hidden; background:url(..../images/bg_bg.png) no-repeat -20px 0px; margin-right:5px;}
+.login-cnt .remember i{ display:inline-block; vertical-align:top; width:15px; height:15px; overflow:hidden; background:url(../images/bg_bg.png) no-repeat -20px 0px; margin-right:5px;}
 .login-cnt .remember .on i{ background-position:-40px 0px;}
 .login-cnt .bn-login{ padding-left:84px; margin-top:15px;}
 .login-cnt .bn-login button{ width:280px; height:38px; cursor:pointer; background:#17A2D5; text-align:center; font-size:16px; color:#fff; border:none;-moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px;}
@@ -1049,22 +1049,24 @@ body {background:#F8F8F8;}
 .login-cnt .bn-reg button{ border:none; width:200px; height:38px; text-align:center; cursor:pointer; font-size:16px; color:#fff;-moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; background:#E55266;}
 .login-cnt .login-right ul{ width:610px; margin-top:26px;}
 .login-cnt .login-right li{ float:left; width:162px; text-align:center; margin-right:21px;}
-.login-cnt .login-right li i{ display:block; width:56px; height:56px; overflow:hidden; background:url(..../images/icon2.png) no-repeat; margin:0 auto;}
+.login-cnt .login-right li i{ display:block; width:56px; height:56px; overflow:hidden; background:url(../images/icon2.png) no-repeat; margin:0 auto;}
 .login-cnt .login-right li h3{ margin-top:10px; color:#333; font-size:14px;}
 .login-cnt .login-right li p{ line-height:20px; margin-top:16px;}
 .login-cnt .login-right li p span{ color:#444;}
 .login-cnt .login-right .jpsb i{ background-position:0px -60px;}
 .login-cnt .login-right .tzzr{ width:178px;}
 .login-cnt .login-right .tzzr i{ background-position:0px -120px;}
-.login-cnt .ok{ float:left; width:18px; height:18px; overflow:hidden; background:url(..../images/bg_bg.png) no-repeat -60px 0px; display:inline; margin:10px 0px 0px 10px;}
+.login-cnt .ok{ float:left; width:18px; height:18px; overflow:hidden; background:url(../images/bg_bg.png) no-repeat -60px 0px; display:inline; margin:10px 0px 0px 10px;}
 
 /*==============注册===========*/
 .registBody {padding-top:15px;}
-.reg-step{ width:936px; margin:0 auto;overflow:hidden;}
-.reg-step ul{height:58px; background:url(..../images/reg-step.png) no-repeat center;padding-left:173px;}
-.reg-step li{ float:left;width:160px;line-height:58px; color:#444; font-size:16px;text-align:center; display:inline;margin-right:106px;}
-.reg-step .last{margin-right:0px; color:#999;}
-.reg-body{ padding:20px 30px 80px 45px; height:624px; background:#fffcf8 margin-top:25px;}
+.reg-step,.realName-step,.reg-complete{ width:936px; margin:0 auto;overflow:hidden;}
+.reg-step ul {height:58px; background:url(../images/reg-step.png) no-repeat center;padding-left:173px;}
+.realName-step ul {height:58px; background:url(../images/reg-step.png) no-repeat 173px 50% ;padding-left:173px;}
+.reg-complete ul {height:58px; background:url(../images/reg-step.png) no-repeat 173px 100% ;padding-left:173px;}
+.reg-step li,.realName-step li,.reg-complete li{ float:left;width:160px;line-height:58px; color:#444; font-size:16px;text-align:center; display:inline;margin-right:106px;}
+.reg-step .last,.realName-step .last{margin-right:0px; color:#999;}
+.reg-body{ padding:20px 30px 80px 45px; height:624px; background:#fffcf8; margin-top:25px;}
 .reg-body .reg-form{ width:498px; padding-bottom:35px;}
 .reg-body .reg-form .invite{ width:498px;}
 .reg-body label{ width:98px;position:relative;}
@@ -1110,8 +1112,8 @@ background: #17A2D5;-moz-border-radius: 2px;-webkit-border-radius: 2px;border-ra
 .reg-detailed{ margin-top:15px; padding:25px 0px 50px 0px;background:#fff;}
 .reg-detailed .reg-slogan{ height:34px; position:relative;}
 .reg-detailed .reg-slogan h3{ float:left; height:34px; line-height:34px; font-size:18px; position:relative; background:#EA5A6E; color:#fff; padding:0px 30px 0px 28px;}
-.reg-detailed .reg-slogan .bgColor{ display:block; width:9px; height:43px; overflow:hidden; background:url(..../images/bg_bg.png) no-repeat 0px -25px; position:absolute; left:-9px; top:0px;}
-.reg-detailed .reg-slogan em{ display:block; width:15px; height:34px; overflow:hidden; background:url(..../images/bg_bg.png) no-repeat -15px -25px; position:absolute; right:-15px; top:0px;}
+.reg-detailed .reg-slogan .bgColor{ display:block; width:9px; height:43px; overflow:hidden; background:url(../images/bg_bg.png) no-repeat 0px -25px; position:absolute; left:-9px; top:0px;}
+.reg-detailed .reg-slogan em{ display:block; width:15px; height:34px; overflow:hidden; background:url(../images/bg_bg.png) no-repeat -15px -25px; position:absolute; right:-15px; top:0px;}
 .reg-info-cnt{ padding:0px 60px 0px 33px; background:url(../images/bg-reg-line.gif) repeat-y 56px 0px; margin-top:42px;}
 .reg-tit{ margin-bottom:30px;}
 .reg-tit .icon-password{ float:left; width:50px; height:50px; overflow:hidden; background:url(../images/icon2.png) no-repeat 0px -180px; margin-right:30px;}
@@ -1119,9 +1121,9 @@ background: #17A2D5;-moz-border-radius: 2px;-webkit-border-radius: 2px;border-ra
 .reg-tit h4{ float:left; line-height:50px; color:#666; font-size:14px;}
 .reg-tit h4 a{ color:#fa3e58;}
 .reg-tit .help{ float:left; width:18px; height:18px; position:relative; margin-top:16px;}
-.reg-tit .help .icon-wenhao{ float:left; width:18px; height:18px; overflow:hidden; background:url(..../images/bg_bg.png) no-repeat -50px -25px; cursor:pointer;}
+.reg-tit .help .icon-wenhao{ float:left; width:18px; height:18px; overflow:hidden; background:url(../images/bg_bg.png) no-repeat -50px -25px; cursor:pointer;}
 .hint-layer{ display:none; width:254px; border:solid 1px #F0E3BC; background:#fff; position:absolute; right:-276px; top:-3px;-moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; color:#999;}
-.hint-layer i{ display:block; width:8px; height:8px; overflow:hidden; background:url(..../images/bg_bg.png) no-repeat -35px -25px; position:absolute; left:-8px; top:6px;}
+.hint-layer i{ display:block; width:8px; height:8px; overflow:hidden; background:url(../images/bg_bg.png) no-repeat -35px -25px; position:absolute; left:-8px; top:6px;}
 .hint-layer p{ padding:6px 10px;line-height:18px;}
 .hint-layer p span{ color:#fa3e58;}
 .reg-detailed label{ width:217px; margin-right:20px;}
@@ -1235,7 +1237,7 @@ background: #17A2D5;-moz-border-radius: 2px;-webkit-border-radius: 2px;border-ra
 .zhuolu-reg .bn-reg button:hover{ background:#fd8f62;}
 .zhuolu-reg .form-hint{  height:36px; line-height:36px; background:#FFF9F9; border:solid 1px #FA3D58; position:absolute; left:78px; top:32px; }
 .zhuolu-reg .form-hint p{ padding:0px 10px; color:#fa3e58;}
-.zhuolu-reg .form-hint i{ display:block; width:8px; height:6px; overflow:hidden; background:url(..../images/bg_bg.png) no-repeat; position:absolute; left:20px; top:-6px;}
+.zhuolu-reg .form-hint i{ display:block; width:8px; height:6px; overflow:hidden; background:url(../images/bg_bg.png) no-repeat; position:absolute; left:20px; top:-6px;}
 /*==================投资列表=================*/
 .loadingpage_invest_list{ background:#f8f8f8; padding-bottom:20px; border-top:solid 1px #E4E4E4;}
 .loadingpage_invest_list .groomWap{ margin-top: 30px;}

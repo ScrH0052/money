@@ -224,29 +224,6 @@ function checkMessCodeFormat(messCode) {
 	showSuccess(id)
 	return messCodeFormatFlag;
 }
-
-
-/**
- * 从服务端校验手机号和验证码是否匹配
- * @param phone 手机号码
- * @param messCode 验证码
- * @returns {boolean} 校验结果
- */
-function checkMessCodeBeforeSubmit(phone,messCode) {
-	$.get("/user/register/checkMessCode",
-		{
-			phone:phone,
-			messCode:messCode,
-		},
-		function (data) {
-			if (!data.flag) {
-				showError('messageCode', data.message);
-			}
-			return data.flag;
-		}
-	);
-}
-
 /**
  * 提交注册信息。
  * 1. 检验手机号、密码、验证码格式的校验位是否为true
@@ -268,25 +245,36 @@ function registSubmit(phone,loginPassword,messageCode) {
 		checkMessCodeFormat($.trim(messageCode.val()));
 		return false;
 	}
-	//2. 校验验证码是否正确
-	if (!checkMessCodeBeforeSubmit(phone.val(),messageCode.val())) {
-		return false
-	}
 
-	//3. 提交注册信息
-	$.get("/user/register/submit",
+	//2. 校验验证码是否正确
+	$.get("/user/register/checkMessCode",
 		{
-			phone: phone.val(),
-			pwd: loginPassword.val(),
+			phone:$.trim(phone.val()),
+			messCode:$.trim(messageCode.val()),
 		},
 		function (data) {
-			if (data.flag) {
-				window.location.href='/loan/page/realName'
-			}else {
-				alert(data.message)
+			if (!data.flag) {
+				showError('messageCode', data.message);
 				return false
 			}
+			//3. 提交注册信息
+			$.get("/user/register/submit",
+				{
+					phone: $.trim(phone.val()),
+					pwd: $.trim(loginPassword.val()),
+				},
+				function (data) {
+					if (data.flag) {
+						window.location.href='/loan/page/realName'
+					}else {
+						alert(data.message)
+						return false
+					}
+				}
+			);
 		}
 	);
+
+
 
 }

@@ -22,5 +22,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/loan/page/register").setViewName("register");
         //跳转实名认证页面
         registry.addViewController("/loan/page/realName").setViewName("realName");
+        //跳转注册成功页面
+        registry.addViewController("/loan/page/complete").setViewName("registerComplete");
     }
 }

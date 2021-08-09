@@ -1,7 +1,10 @@
 package com.scrh.money.dataservice.service;
 
 import com.scrh.money.dataservice.mapper.UserMapper;
+import com.scrh.money.exterface.domain.User;
 import com.scrh.money.exterface.service.UserService;
+import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,12 +22,11 @@ import java.util.Map;
  */
 @DubboService(interfaceClass = UserService.class, version = "0.0.1", timeout = 20000)
 @Component
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Resource
     private RedisTemplate<Object,Object> redisTemplate;
 
-    @Resource
     private UserMapper userMapper;
 
     /**
@@ -60,6 +63,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void saveMessCode(String phone, String messCode) {
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.opsForValue().set(phone+"MessCode", messCode,Duration.ofMinutes(5));
     }
 
@@ -80,5 +84,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public void cacheSomeInfo(Map<String, Object> someInfo) {
         redisTemplate.opsForValue().set(someInfo.get("ppp") + "someInfo",someInfo,Duration.ofMinutes(10));
+    }
+
+    /**
+     * 校验实名认证中输入的手机号码是否与注册的手机号码一致
+     * @param phone 手机号码
+     * @return 判断结果
+     */
+    @Override
+    public boolean checkPhone(Long phone) {
+        Object o = redisTemplate.opsForValue().get(phone + "someInfo");
+        return ObjectUtils.isEmpty(o);
+    }
+
+    /**
+     * 完成注册，将用户信息插入到数据库中
+     * @param user 用户对象
+     * @return 插入结果
+     */
+    @Override
+    public boolean registComplete(User user) {
+        Map<String,Object> someInfo = (HashMap<String, Object>) redisTemplate.opsForValue().get(user.getPhone()+"someInfo");
+        if (ObjectUtils.isEmpty(someInfo)) {
+            return false;
+        }
+        user.setLoginPassword((String) someInfo.get("pMwMd"));
+        return userMapper.insert(user) != 0;
     }
 }
