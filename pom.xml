@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -34,7 +34,7 @@
         <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
         <jedis.version>3.6.2</jedis.version>
         <hutool.version>5.7.7</hutool.version>
-        <alipay-easysdk.version>2.2.0</alipay-easysdk.version>
+        <alipay-sdk-all.version>4.16.2.ALL</alipay-sdk-all.version>
     </properties>
     <!--子项目依赖管理-->
     <dependencyManagement>
@@ -64,11 +64,11 @@
                 </exclusions>
             </dependency>
             <!--fastjson依赖，本项目中使用HuTool工具-->
-<!--            <dependency>-->
-<!--                <groupId>com.alibaba</groupId>-->
-<!--                <artifactId>fastjson</artifactId>-->
-<!--                <version>${fastjson.version}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.alibaba</groupId>-->
+            <!--                <artifactId>fastjson</artifactId>-->
+            <!--                <version>${fastjson.version}</version>-->
+            <!--            </dependency>-->
             <!-- pagehelper 分页插件 -->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
@@ -164,14 +164,13 @@
             <!-- 支付宝SDK-->
             <dependency>
                 <groupId>com.alipay.sdk</groupId>
-                <artifactId>alipay-easysdk</artifactId>
-                <version>${alipay-easysdk.version}</version>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay-sdk-all.version}</version>
             </dependency>
 
         </dependencies>
     </dependencyManagement>
     <dependencies>
-
 
 
         <!--lombok-->
@@ -181,23 +180,6 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-
-
-        </plugins>
-    </build>
 
 
 </project>

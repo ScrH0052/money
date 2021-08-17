@@ -1,11 +1,9 @@
 server:
-  port: 8101
-management:
-  server:
-    port: 8101
-    
+  port: 80
+
 dubbo:
   registry:
+    protocol: zookeeper
     address: zookeeper://192.168.146.130:2181
   monitor:
     protocol: registry
@@ -13,6 +11,10 @@ dubbo:
     name: web
 
 
+
 spring:
   thymeleaf:
     cache: false
+  devtools:
+    restart:
+      enabled: true

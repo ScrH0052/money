@@ -10,11 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author ScrH0052
  * @date 2021/7/31
  */
-
 @EnableDubbo
 @SpringBootApplication
 public class WebApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);
     }
+
 }

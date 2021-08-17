@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-    url: jdbc:mysql://192.168.146.130:3306/money?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.146.130:3306/money?useUnicode=true&characterEncoding=utf-8
   # redis 配置
   redis:
     # 地址
@@ -39,8 +39,8 @@ dubbo:
     name: dataservice
   #注册中心协议和地址
   registry:
-    protocol: zookeeper
     address: zookeeper://192.168.146.130:2181
+    protocol: zookeeper
   #通信规则
   protocol:
     name: dubbo

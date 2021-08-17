@@ -1,16 +1,16 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="keywords" content="动力金融网，投资理财，P2P理财，互联网金融，投资理财，理财，网络贷款，个人贷款，小额贷款，网络投融资平台, 网络理财, 固定收益, 100%本息保障" />
-    <meta name="description" content="动力金融网-专业的互联网金融平台！预期年化收益可高达13%，第三方资金托管，屡获大奖。"/>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="动力金融网，投资理财，P2P理财，互联网金融，投资理财，理财，网络贷款，个人贷款，小额贷款，网络投融资平台, 网络理财, 固定收益, 100%本息保障" name="keywords"/>
+    <meta content="动力金融网-专业的互联网金融平台！预期年化收益可高达13%，第三方资金托管，屡获大奖。" name="description"/>
     <title>动力金融网-专业的互联网金融公司</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/center.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/fund-guanli.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/security.css}"/>
-    <script type="text/javascript" language="javascript" th:src="@{/js/jquery-1.7.2.min.js}"></script>
-    <script type="text/javascript" language="javascript" th:src="@{/js/trafficStatistics.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/center.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/fund-guanli.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/base.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/security.css}" type="text/css"/>
+    <script language="javascript" th:src="@{/js/jquery-1.7.2.min.js}" type="text/javascript"></script>
+    <script language="javascript" th:src="@{/js/trafficStatistics.js}" type="text/javascript"></script>
 </head>
 
 <body>
@@ -35,9 +35,9 @@
             <div class="right-body">
                 <div class="leftTitle"><span class="on">第三方支付平台</span></div>
 
-                <div class="unrecognized" style = "display:block;" id="unrecognized1">
+                <div class="unrecognized" id="unrecognized1" style="display:block;">
                     <h3 th:text="${trade_msg}">显示错误信息</h3>
-                    <a class="input_btn" th:href="@{/loan/page/recharge}">再去充值</a>
+                    <a class="input_btn" th:href="@{/loan/page/recharge}">继续充值</a>
                 </div>
 
             </div>

@@ -5,14 +5,14 @@
 <mapper namespace="com.scrh.money.dataservice.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.scrh.money.exterface.domain.User">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="phone" column="phone" jdbcType="VARCHAR"/>
-            <result property="loginPassword" column="login_password" jdbcType="VARCHAR"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="idCard" column="id_card" jdbcType="VARCHAR"/>
-            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
-            <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
-            <result property="headerImage" column="header_image" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="loginPassword" column="login_password" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="idCard" column="id_card" jdbcType="VARCHAR"/>
+        <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="headerImage" column="header_image" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -20,75 +20,86 @@
         name,id_card,add_time,
         last_login_time,header_image
     </sql>
-
+    <!--主键查询-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from u_user
-        where  id = #{id,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=INTEGER}
     </select>
+    <!--统计用户数量-->
     <select id="selectCountAllUsers" resultType="java.lang.Long">
-        select
-        count(0)
+        select count(0)
         from u_user
     </select>
+    <!--查询手机号是否已有注册信息-->
     <select id="selectCountUserByPhone" resultType="java.lang.Integer">
         select count(0)
         from u_user
         where phone = #{phone}
     </select>
-
+    <!--核对帐号密码-->
+    <select id="selectUserByPhoneAndPwd" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from u_user
+        where phone = #{loginAct}
+        and login_password = #{md5}
+    </select>
+    <!--删除用户-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from u_user
-        where  id = #{id,jdbcType=INTEGER} 
+        delete
+        from u_user
+        where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.scrh.money.exterface.domain.User" useGeneratedKeys="true">
+    <!--添加用户-->
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.scrh.money.exterface.domain.User"
+            useGeneratedKeys="true">
         insert into u_user
-        ( id,phone,login_password
-        ,name,id_card,add_time
-        ,last_login_time,header_image)
-        values (#{id,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},#{loginPassword,jdbcType=VARCHAR}
-        ,#{name,jdbcType=VARCHAR},#{idCard,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP}
-        ,#{lastLoginTime,jdbcType=TIMESTAMP},#{headerImage,jdbcType=VARCHAR})
+        ( id, phone, login_password
+        , name, id_card, add_time
+        , last_login_time, header_image)
+        values ( #{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}
+               , #{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}
+               , #{lastLoginTime,jdbcType=TIMESTAMP}, #{headerImage,jdbcType=VARCHAR})
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.scrh.money.exterface.domain.User">
         update u_user
         <set>
-                <if test="phone != null">
-                    phone = #{phone,jdbcType=VARCHAR},
-                </if>
-                <if test="loginPassword != null">
-                    login_password = #{loginPassword,jdbcType=VARCHAR},
-                </if>
-                <if test="name != null">
-                    name = #{name,jdbcType=VARCHAR},
-                </if>
-                <if test="idCard != null">
-                    id_card = #{idCard,jdbcType=VARCHAR},
-                </if>
-                <if test="addTime != null">
-                    add_time = #{addTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="lastLoginTime != null">
-                    last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="headerImage != null">
-                    header_image = #{headerImage,jdbcType=VARCHAR},
-                </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="loginPassword != null">
+                login_password = #{loginPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="headerImage != null">
+                header_image = #{headerImage,jdbcType=VARCHAR},
+            </if>
         </set>
-        where   id = #{id,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.scrh.money.exterface.domain.User">
         update u_user
-        set 
-            phone =  #{phone,jdbcType=VARCHAR},
-            login_password =  #{loginPassword,jdbcType=VARCHAR},
-            name =  #{name,jdbcType=VARCHAR},
-            id_card =  #{idCard,jdbcType=VARCHAR},
-            add_time =  #{addTime,jdbcType=TIMESTAMP},
-            last_login_time =  #{lastLoginTime,jdbcType=TIMESTAMP},
-            header_image =  #{headerImage,jdbcType=VARCHAR}
-        where   id = #{id,jdbcType=INTEGER} 
+        set phone           = #{phone,jdbcType=VARCHAR},
+            login_password  = #{loginPassword,jdbcType=VARCHAR},
+            name            = #{name,jdbcType=VARCHAR},
+            id_card         = #{idCard,jdbcType=VARCHAR},
+            add_time        = #{addTime,jdbcType=TIMESTAMP},
+            last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            header_image    = #{headerImage,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

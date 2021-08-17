@@ -5,13 +5,13 @@
 <mapper namespace="com.scrh.money.dataservice.mapper.RechargeRecordMapper">
 
     <resultMap id="BaseResultMap" type="com.scrh.money.exterface.domain.RechargeRecord">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="uid" column="uid" jdbcType="INTEGER"/>
-            <result property="rechargeNo" column="recharge_no" jdbcType="VARCHAR"/>
-            <result property="rechargeStatus" column="recharge_status" jdbcType="VARCHAR"/>
-            <result property="rechargeMoney" column="recharge_money" jdbcType="DOUBLE"/>
-            <result property="rechargeTime" column="recharge_time" jdbcType="TIMESTAMP"/>
-            <result property="rechargeDesc" column="recharge_desc" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="rechargeNo" column="recharge_no" jdbcType="VARCHAR"/>
+        <result property="rechargeStatus" column="recharge_status" jdbcType="VARCHAR"/>
+        <result property="rechargeMoney" column="recharge_money" jdbcType="DOUBLE"/>
+        <result property="rechargeTime" column="recharge_time" jdbcType="TIMESTAMP"/>
+        <result property="rechargeDesc" column="recharge_desc" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -22,78 +22,100 @@
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from b_recharge_record
-        where  id = #{id,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCountByUid" resultType="java.lang.Integer">
+        select count(0)
+        from b_recharge_record
+        where uid = #{uid,jdbcType=INTEGER};
+    </select>
+
+    <select id="queryRecordsByUidAndPageModel" resultMap="BaseResultMap">
+        select id, uid, recharge_no, recharge_status, recharge_money, recharge_time, recharge_desc
+        from b_recharge_record
+        where uid = #{uid,jdbcType=INTEGER}
+        ORDER BY recharge_time DESC
+        limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER};
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from b_recharge_record
-        where  id = #{id,jdbcType=INTEGER} 
+        delete
+        from b_recharge_record
+        where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.scrh.money.exterface.domain.RechargeRecord" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.scrh.money.exterface.domain.RechargeRecord"
+            useGeneratedKeys="true">
         insert into b_recharge_record
-        ( id,uid,recharge_no
-        ,recharge_status,recharge_money,recharge_time
-        ,recharge_desc)
-        values (#{id,jdbcType=INTEGER},#{uid,jdbcType=INTEGER},#{rechargeNo,jdbcType=VARCHAR}
-        ,#{rechargeStatus,jdbcType=VARCHAR},#{rechargeMoney,jdbcType=DOUBLE},#{rechargeTime,jdbcType=TIMESTAMP}
-        ,#{rechargeDesc,jdbcType=VARCHAR})
+        ( id, uid, recharge_no
+        , recharge_status, recharge_money, recharge_time
+        , recharge_desc)
+        values ( #{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{rechargeNo,jdbcType=VARCHAR}
+               , #{rechargeStatus,jdbcType=VARCHAR}, #{rechargeMoney,jdbcType=DOUBLE}
+               , #{rechargeTime,jdbcType=TIMESTAMP}
+               , #{rechargeDesc,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.scrh.money.exterface.domain.RechargeRecord" useGeneratedKeys="true">
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.scrh.money.exterface.domain.RechargeRecord" useGeneratedKeys="true">
         insert into b_recharge_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
-                <if test="id != null">id,</if>
-                <if test="uid != null">uid,</if>
-                <if test="rechargeNo != null">rechargeNo,</if>
-                <if test="rechargeStatus != null">rechargeStatus,</if>
-                <if test="rechargeMoney != null">rechargeMoney,</if>
-                <if test="rechargeTime != null">rechargeTime,</if>
-                <if test="rechargeDesc != null">rechargeDesc,</if>
+            <if test="id != null">id,</if>
+            <if test="uid != null">uid,</if>
+            <if test="rechargeNo != null">recharge_no,</if>
+            <if test="rechargeStatus != null">recharge_status,</if>
+            <if test="rechargeMoney != null">recharge_money,</if>
+            <if test="rechargeTime != null">recharge_time,</if>
+            <if test="rechargeDesc != null">recharge_desc,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-                <if test="id != null">id = #{id,jdbcType=INTEGER},</if>
-                <if test="uid != null">uid = #{uid,jdbcType=INTEGER},</if>
-                <if test="rechargeNo != null">recharge_no = #{rechargeNo,jdbcType=VARCHAR},</if>
-                <if test="rechargeStatus != null">recharge_status = #{rechargeStatus,jdbcType=VARCHAR},</if>
-                <if test="rechargeMoney != null">recharge_money = #{rechargeMoney,jdbcType=DOUBLE},</if>
-                <if test="rechargeTime != null">recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},</if>
-                <if test="rechargeDesc != null">recharge_desc = #{rechargeDesc,jdbcType=VARCHAR},</if>
+            <if test="id != null">#{id,jdbcType=INTEGER},</if>
+            <if test="uid != null">#{uid,jdbcType=INTEGER},</if>
+            <if test="rechargeNo != null">#{rechargeNo,jdbcType=VARCHAR},</if>
+            <if test="rechargeStatus != null">#{rechargeStatus,jdbcType=VARCHAR},</if>
+            <if test="rechargeMoney != null">#{rechargeMoney,jdbcType=DOUBLE},</if>
+            <if test="rechargeTime != null">#{rechargeTime,jdbcType=TIMESTAMP},</if>
+            <if test="rechargeDesc != null">#{rechargeDesc,jdbcType=VARCHAR},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.scrh.money.exterface.domain.RechargeRecord">
         update b_recharge_record
         <set>
-                <if test="uid != null">
-                    uid = #{uid,jdbcType=INTEGER},
-                </if>
-                <if test="rechargeNo != null">
-                    recharge_no = #{rechargeNo,jdbcType=VARCHAR},
-                </if>
-                <if test="rechargeStatus != null">
-                    recharge_status = #{rechargeStatus,jdbcType=VARCHAR},
-                </if>
-                <if test="rechargeMoney != null">
-                    recharge_money = #{rechargeMoney,jdbcType=DOUBLE},
-                </if>
-                <if test="rechargeTime != null">
-                    recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="rechargeDesc != null">
-                    recharge_desc = #{rechargeDesc,jdbcType=VARCHAR},
-                </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="rechargeNo != null">
+                recharge_no = #{rechargeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="rechargeStatus != null">
+                recharge_status = #{rechargeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="rechargeMoney != null">
+                recharge_money = #{rechargeMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="rechargeTime != null">
+                recharge_time = #{rechargeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rechargeDesc != null">
+                recharge_desc = #{rechargeDesc,jdbcType=VARCHAR},
+            </if>
         </set>
-        where   id = #{id,jdbcType=INTEGER} 
+        where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.scrh.money.exterface.domain.RechargeRecord">
         update b_recharge_record
-        set 
-            uid =  #{uid,jdbcType=INTEGER},
-            recharge_no =  #{rechargeNo,jdbcType=VARCHAR},
-            recharge_status =  #{rechargeStatus,jdbcType=VARCHAR},
-            recharge_money =  #{rechargeMoney,jdbcType=DOUBLE},
-            recharge_time =  #{rechargeTime,jdbcType=TIMESTAMP},
-            recharge_desc =  #{rechargeDesc,jdbcType=VARCHAR}
-        where   id = #{id,jdbcType=INTEGER} 
+        set uid             = #{uid,jdbcType=INTEGER},
+            recharge_no     = #{rechargeNo,jdbcType=VARCHAR},
+            recharge_status = #{rechargeStatus,jdbcType=VARCHAR},
+            recharge_money  = #{rechargeMoney,jdbcType=DOUBLE},
+            recharge_time   = #{rechargeTime,jdbcType=TIMESTAMP},
+            recharge_desc   = #{rechargeDesc,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateRechargeByTradeNoAndStatusCode">
+        update b_recharge_record
+        set recharge_status = #{status}
+        where recharge_no = #{trade_no};
     </update>
 </mapper>

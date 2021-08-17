@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="动力金融网，动力金融，动力金融财富,金元宝，金元宝，网络理财，个人理财，投资理财，P2P理财，互联网金融，投资理财，债权转让，理财，网络贷款，个人贷款，理财服务，网贷，小额贷款，网络投融资平台, 网络理财,固定收益,100%本息保障"
+          name="keywords"/>
+    <meta content="动力金融网用户注册，专业的互联网金融信息服务平台" name="description"/>
+    <title>登录动力金融网-动力金融网,专业的互联网金融信息服务平台</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+    <script th:src="@{/js/jquery-1.7.2.min.js}" type="text/javascript"></script>
+</head>
+
+<body>
+<!--页头start-->
+<div id="header">
+    <div th:include="commons/header :: html"></div>
+</div>
+<!--页头end-->
+
+<div class="login-body">
+    <div class="mainBox">
+        <div class="homeWap">
+            <div class="login-cnt clearfix">
+                <table>
+                    <tr>
+                        <td>订单号</td>
+                        <td>[[${tradeNo}]]</td>
+                    </tr>
+                    <tr>
+                        <td>支付宝订单号</td>
+                        <td>[[${tradeNo_alipay}]]</td>
+                    </tr>
+                    <tr>
+                        <td>订单金额（元）</td>
+                        <td>[[${amountMoney}]]</td>
+                    </tr>
+                    <tr>
+                        <td>支付状态</td>
+                        <td>[[${payStatus}]]</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--页脚start-->
+<div th:include="commons/footer :: html"></div>
+<!--页脚end-->
+</body>
+<script>
+</script>
+</html>

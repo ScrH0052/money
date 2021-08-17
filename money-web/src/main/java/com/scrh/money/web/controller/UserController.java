@@ -2,37 +2,34 @@ package com.scrh.money.web.controller;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
-import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.XmlUtil;
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.MD5;
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.scrh.money.common.utils.Result;
+import com.scrh.money.exterface.domain.BidInfo;
+import com.scrh.money.exterface.domain.FinanceAccount;
 import com.scrh.money.exterface.domain.User;
+import com.scrh.money.exterface.service.BidInfoService;
+import com.scrh.money.exterface.service.FinanceAccountService;
 import com.scrh.money.exterface.service.UserService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.w3c.dom.Document;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 import javax.xml.xpath.XPathConstants;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,6 +44,11 @@ public class UserController {
     @DubboReference(interfaceClass = UserService.class, version = "0.0.1", timeout = 20000)
     private UserService userService;
 
+    @DubboReference(interfaceClass = FinanceAccountService.class, version = "0.0.1", timeout = 20000)
+    private FinanceAccountService financeAccountService;
+
+    @DubboReference(interfaceClass = BidInfoService.class, version = "0.0.1", timeout = 20000)
+    private BidInfoService bidInfoService;
 
     /**
      * 校验手机号是否已经被注册
@@ -80,7 +82,7 @@ public class UserController {
 
         String result;
         //模拟报文
-        result =" {\n" +
+        result = " {\n" +
                 "    \"code\": \"10000\",\n" +
                 "    \"charge\": false,\n" +
                 "    \"remain\": 0,\n" +
@@ -124,7 +126,8 @@ public class UserController {
 
     /**
      * 验证用户输入的验证码是否正确
-     * @param phone 手机号码
+     *
+     * @param phone    手机号码
      * @param messCode 用户输入的验证码
      * @return 校验结果
      */
@@ -139,8 +142,9 @@ public class UserController {
 
     /**
      * 接收提交的注册手机号和密码，存于缓存中等待实名认证完成
+     *
      * @param phone 手机号
-     * @param pwd 密码
+     * @param pwd   密码
      * @return 存储结果
      */
     @GetMapping("/user/register/submit")
@@ -163,8 +167,9 @@ public class UserController {
 
     /**
      * 获取图片验证码，以流的形式输出到前端页面
+     *
      * @param response 响应对象
-     * @param session session对象
+     * @param session  session对象
      */
     @RequestMapping("/user/getYzm")
     public void getYzm(HttpServletResponse response,
@@ -176,7 +181,7 @@ public class UserController {
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(width, height, codeCount, 25);
         //将验证码存储到session中
         String code = lineCaptcha.getCode();
-        session.setAttribute("YZM",code);
+        session.setAttribute("YZM", code);
         //设置验证码有效时间5分钟
         session.setMaxInactiveInterval(300);
         try {
@@ -190,6 +195,7 @@ public class UserController {
 
     /**
      * 检查是否与注册时提交的手机号码相同
+     *
      * @param phone 实名认证中提交的手机号码
      * @return 检查结果
      */
@@ -207,13 +213,13 @@ public class UserController {
     public Map<String, Object> checkCaptcha(String inputCaptcha, HttpSession session) {
         //从session中读取正确的验证码
         String currentCaptcha = (String) session.getAttribute("YZM");
-        System.out.println("YZM============="+currentCaptcha);
+        System.out.println("YZM=============" + currentCaptcha);
         //判断验证码是否已经失效
-        if (StringUtils.isEmpty(currentCaptcha)){
+        if (StringUtils.isEmpty(currentCaptcha)) {
             return Result.getError("验证码已失效，请点击进行更新！");
         }
 
-        if (!StringUtils.equals(currentCaptcha,inputCaptcha)){
+        if (!StringUtils.equals(currentCaptcha, inputCaptcha)) {
             return Result.getError("验证码错误！");
         }
         return Result.getSuccess();
@@ -221,7 +227,8 @@ public class UserController {
 
     /**
      * 通过平台api校验实名认证信息是否正确,正确则将注册信息存入数据库中，完成注册，并返回注册结果
-     * @param name 用户提供的姓名
+     *
+     * @param name   用户提供的姓名
      * @param idCode 用户提供的身份证号码
      * @return 校验结果
      */
@@ -230,7 +237,7 @@ public class UserController {
     public Map<String, Object> checkRealNameAndIdCard(String name, String idCode, String phone) {
         String result;
         //模拟报文
-        result ="{\n" +
+        result = "{\n" +
                 "    \"code\": \"10000\",\n" +
                 "    \"charge\": false,\n" +
                 "    \"remain\": 0,\n" +
@@ -272,7 +279,7 @@ public class UserController {
             //返回json中的result属性
             Boolean isOk = jsonObject.getJSONObject("result")
                     .getJSONObject("result")
-                    .get("isok",Boolean.class);
+                    .get("isok", Boolean.class);
 
             if (!isOk) {
                 return Result.getError("身份证号码与姓名不匹配！");
@@ -287,13 +294,65 @@ public class UserController {
         user.setName(name);
         user.setIdCard(idCode);
         user.setAddTime(new Date());
-        if (!userService.registComplete(user)){
+        if (!userService.registComplete(user)) {
             return Result.getError("服务器异常，请重试！");
         }
+
         return Result.getSuccess();
     }
 
+    @GetMapping("/user/login")
+    @ResponseBody
+    public Map<String, Object> login(HttpSession session, String loginAct, String loginPwd, String captcha) {
+        String currentCaptcha = (String) session.getAttribute("YZM");
+        //开发测试阶段注释掉不予校验
+//        if (ObjectUtils.isEmpty(currentCaptcha)) {
+//            //验证码失效，返回状态码“03”
+//            return Result.getError("02");
+//        } else if (!StringUtils.equals(captcha, currentCaptcha)) {
+//            //验证码错误，返回状态码“04”
+//            return Result.getError("03");
+//        }
 
+        //校验账号密码
+        User user = userService.queryUserByPhoneAndPwd(loginAct, SecureUtil.md5(loginPwd + loginAct));
 
+        if (ObjectUtils.isEmpty(user)) {
+            return Result.getError("01");
+        }
+        //设置session时间有效期为一天
+        session.setMaxInactiveInterval(24 * 60 * 60);
+        session.setAttribute("userAccount", user);
+        updateFinanceAccount(session, user.getId());
+        return Result.getSuccess();
+    }
+
+    @GetMapping("/user/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("userAccount");
+        session.removeAttribute("availableMoney");
+        return "redirect:/";
+    }
+
+    @GetMapping("/user/myCenter")
+    public String myCenter(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("userAccount");
+        if (user == null) {
+            return "redirect:/index";
+        }
+        Integer uid = user.getId();
+        Integer pageStart = 0;
+        Integer pageSize = 5;
+        //节约时间，仅完成bidInfo部分作为练习
+        List<BidInfo> bidInfoList = bidInfoService.queryUserBidInfo(uid, pageStart, pageSize);
+        model.addAttribute("bidInfoList", bidInfoList);
+        updateFinanceAccount(session, uid);
+        return "myCenter";
+    }
+
+    private void updateFinanceAccount(HttpSession session, Integer uid) {
+        FinanceAccount financeAccount = financeAccountService.queryAccountMoney(uid);
+        session.setAttribute("availableMoney", financeAccount.getAvailableMoney());
+    }
 
 }
